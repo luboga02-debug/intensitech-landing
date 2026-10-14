@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntensiTech Solutions | Soluções Digitais para o Ambiente Crítico</title>
+  <meta name="description" content="Software médico e ferramentas de apoio à decisão clínica desenvolvidas por intensivistas em Luanda, Angola. Precisão e rapidez à cabeceira do doente crítico.">
+  <meta name="theme-color" content="#122B3A">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            intensi: {
+              dark: '#122B3A',
+              navy: '#1A3B4E',
+              deep: '#0D1E29',
+              accent: '#00A8CC',
+              accentHover: '#00C2EB',
+              accentSoft: 'rgba(0, 168, 204, 0.12)',
+              lightBg: '#F8FAFC',
+              slateCard: '#FFFFFF',
+              borderLight: '#E2E8F0',
+              muted: '#64748B',
+              textDark: '#0F172A',
+            }
+          },
+          boxShadow: {
+            'premium': '0 20px 45px -15px rgba(18, 43, 58, 0.08), 0 0 1px 1px rgba(18, 43, 58, 0.04)',
+            'glow-cyan': '0 0 35px -5px rgba(0, 168, 204, 0.35)',
+            'card-hover': '0 25px 50px -12px rgba(18, 43, 58, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos e utilitários adicionais para acabamento de consultoria de topo */
+    .glass-nav {
+      background: rgba(18, 43, 58, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #0D1E29 0%, #122B3A 50%, #1E4D6B 100%);
+    }
+    .grid-pattern {
+      background-image: radial-gradient(rgba(0, 168, 204, 0.12) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .cyan-text-gradient {
+      background: linear-gradient(135deg, #FFFFFF 30%, #00A8CC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .badge-glow {
+      box-shadow: 0 0 16px rgba(0, 168, 204, 0.25);
+    }
+  </style>
+</head>
+<body class="font-sans text-intensi-textDark bg-white antialiased selection:bg-intensi-accent selection:text-white">
+
+  <!-- =========================================================================
+       1. BARRA DE NAVEGAÇÃO SUPERIOR (Navbar Fixa)
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo & Isótipo (Opção B: Cruz médica estilizada com nós de rede e pulso ciano) -->
+      <a href="#inicio" class="flex items-center space-x-3 group focus:outline-none">
+        <div class="relative w-11 h-11 flex items-center justify-center rounded-xl bg-gradient-to-br from-intensi-navy to-intensi-deep border border-intensi-accent/40 shadow-inner group-hover:border-intensi-accent transition-colors">
+          <!-- Isótipo SVG Opção B -->
+          <svg class="w-7 h-7 text-intensi-accent" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Estrutura da Cruz Médica Conectada -->
+            <path d="M16 6C16 4.89543 16.8954 4 18 4H22C23.1046 4 24 4.89543 24 6V15H33C34.1046 15 35 15.8954 35 17V21C35 22.1046 34.1046 23 33 23H24V32C24 33.1046 23.1046 34 22 34H18C16.8954 34 16 33.1046 16 32V23H7C5.89543 23 5 22.1046 5 21V17C5 15.8954 5.89543 15 7 15H16V6Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" opacity="0.3"/>
+            <!-- Circuito e Pulso Hemodinâmico central -->
+            <path d="M7 19H14L17 11L21 27L24 16L26 21H33" stroke="#00C2EB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Nós de Conectividade Tech -->
+            <circle cx="20" cy="5" r="2.2" fill="#00C2EB"/>
+            <circle cx="34" cy="19" r="2.2" fill="#00C2EB"/>
+            <circle cx="20" cy="33" r="2.2" fill="#00C2EB"/>
+            <circle cx="6" cy="19" r="2.2" fill="#00C2EB"/>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center space-x-1.5">
+            <span class="text-xl font-bold tracking-tight text-white font-sans">Intensi<span class="text-intensi-accent">Tech</span></span>
+          </div>
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold -mt-1">Solutions</span>
+        </div>
+      </a>
+
+      <!-- Centro (Links de Ancoragem Desktop) -->
+      <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <a href="#inicio" class="hover:text-intensi-accent transition-colors">Início</a>
+        <a href="#aplicacoes" class="hover:text-intensi-accent transition-colors">Aplicações</a>
+        <a href="#diferencial" class="hover:text-intensi-accent transition-colors">Diferencial Clínico</a>
+        <a href="#sobre-nos" class="hover:text-intensi-accent transition-colors">Sobre Nós</a>
+        <a href="#contacto" class="hover:text-intensi-accent transition-colors">Contacto</a>
+      </nav>
+
+      <!-- Botão CTA Desktop -->
+      <div class="hidden md:flex items-center space-x-4">
+        <a href="#aplicacoes" class="inline-flex items-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-intensi-accent hover:bg-intensi-accentHover text-intensi-dark transition-all duration-200 shadow-glow-cyan transform hover:-translate-y-0.5">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Descarregar Apps
+        </a>
+      </div>
+
+      <!-- Botão Hambúrguer Mobile -->
+      <div class="flex md:hidden">
+        <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none" aria-label="Abrir Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Menu Dropdown Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-intensi-dark/95 border-b border-white/10 px-4 pt-3 pb-6 space-y-3">
+      <a href="#inicio" class="block py-2 text-base font-medium text-slate-200 hover:text-intensi-accent">Início</a>
+      <a href="#aplicacoes" class="block py-2 text-base font-medium text-slate-200 hover:text-intensi-accent">Aplicações</a>
+      <a href="#diferencial" class="block py-2 text-base font-medium text-slate-200 hover:text-intensi-accent">Diferencial Clínico</a>
+      <a href="#sobre-nos" class="block py-2 text-base font-medium text-slate-200 hover:text-intensi-accent">Sobre Nós</a>
+      <a href="#contacto" class="block py-2 text-base font-medium text-slate-200 hover:text-intensi-accent">Contacto</a>
+      <div class="pt-2">
+        <a href="#aplicacoes" class="w-full inline-flex justify-center items-center px-4 py-3 rounded-lg text-sm font-semibold bg-intensi-accent text-intensi-dark">
+          Descarregar Apps
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =========================================================================
+       2. SECCIÓN PRINCIPAL (Hero Section)
+       ========================================================================= -->
+  <section id="inicio" class="relative pt-32 pb-20 md:pt-40 md:pb-32 hero-gradient overflow-hidden text-white">
+    <!-- Grid sutil de fundo com nós iluminados -->
+    <div class="absolute inset-0 grid-pattern pointer-events-none opacity-40"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-intensi-accent/15 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Conteúdo Textual do Hero (Esquerda) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Badge Institucional Superior -->
+          <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-intensi-accent/30 text-intensi-accent text-xs font-semibold tracking-wider uppercase badge-glow">
+            <span class="w-2 h-2 rounded-full bg-intensi-accent animate-pulse"></span>
+            <span>Healthtech &amp; Medicina Intensiva</span>
+          </div>
+
+          <!-- Título Principal (H1) -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15]">
+            Soluções digitais para o <span class="cyan-text-gradient">ambiente crítico.</span>
+          </h1>
+
+          <!-- Subtítulo (H2) -->
+          <p class="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl">
+            Software médico e ferramentas de apoio à decisão clínica desenvolvidas por intensivistas, desenhadas para oferecer precisão e rapidez à cabeceira do doente.
+          </p>
+
+          <!-- Botões de Ação -->
+          <div class="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <a href="#aplicacoes" class="inline-flex justify-center items-center px-7 py-3.5 rounded-xl text-base font-semibold bg-intensi-accent hover:bg-intensi-accentHover text-intensi-dark transition-all duration-200 shadow-glow-cyan transform hover:-translate-y-0.5">
+              <span>Explorar Aplicações</span>
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </a>
+            <a href="#sobre-nos" class="inline-flex justify-center items-center px-7 py-3.5 rounded-xl text-base font-semibold border border-white/40 hover:border-white hover:bg-white/5 text-white transition-all duration-200">
+              Soluções para Hospitais
+            </a>
+          </div>
+
+          <!-- Indicadores de Credibilidade Rápida -->
+          <div class="pt-8 border-t border-white/10 grid grid-cols-3 gap-4 text-left">
+            <div>
+              <div class="text-2xl font-bold text-white tracking-tight">100%</div>
+              <div class="text-xs text-slate-400 font-medium">Foco em Cuidados Intensivos</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-intensi-accent tracking-tight">&lt; 3 seg</div>
+              <div class="text-xs text-slate-400 font-medium">Cálculos Críticos à Cabeceira</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold text-white tracking-tight">Offline</div>
+              <div class="text-xs text-slate-400 font-medium">Arquitetura Hospitalar Resiliente</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Elemento Visual: Mockup de Smartphone Premium com a App Vasoactivos (Direita) -->
+        <div class="lg:col-span-5 flex justify-center lg:justify-end">
+          <div class="relative w-full max-w-[320px] sm:max-w-[350px]">
+            
+            <!-- Auréola de Destaque -->
+            <div class="absolute inset-0 bg-gradient-to-tr from-intensi-accent/30 to-blue-600/30 rounded-[48px] blur-2xl transform -rotate-3 scale-105 pointer-events-none"></div>
+
+            <!-- Chassi do Smartphone -->
+            <div class="relative bg-slate-900 border-[6px] border-slate-700/80 rounded-[44px] shadow-2xl overflow-hidden p-2">
+              
+              <!-- Notch / Dynamic Island -->
+              <div class="absolute top-4 left-1/2 transform -translate-x-1/2 w-28 h-4 bg-black rounded-full z-30 flex items-center justify-center">
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-800 ml-auto mr-3"></div>
+              </div>
+
+              <!-- Ecrã da Aplicação (Interface Vasoactivos) -->
+              <div class="bg-intensi-deep rounded-[36px] overflow-hidden border border-slate-800 text-white p-4 pt-7 space-y-4 font-sans select-none">
+                
+                <!-- Barra de Estado da App -->
+                <div class="flex items-center justify-between text-xs text-slate-400 pb-1 border-b border-slate-800">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span class="font-bold text-slate-200">VASOACTIVOS</span>
+                  </div>
+                  <span class="text-[10px] bg-intensi-accent/20 text-intensi-accent font-semibold px-2 py-0.5 rounded">UCI ADULTO</span>
+                </div>
+
+                <!-- Seletor do Fármaco Selecionado -->
+                <div class="bg-slate-800/80 rounded-xl p-3 border border-intensi-accent/30">
+                  <div class="text-[11px] text-intensi-accent uppercase font-bold tracking-wider">Fármaco em Perfusão</div>
+                  <div class="text-base font-bold text-white flex items-center justify-between mt-0.5">
+                    <span>Noradrenalina</span>
+                    <span class="text-xs font-normal text-slate-300">4 mg / 50 mL</span>
+                  </div>
+                </div>
+
+                <!-- Dados do Doente e Dose Alvo -->
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/50">
+                    <span class="text-slate-400 block text-[10px]">Peso do Doente</span>
+                    <span class="text-sm font-bold text-white">70 kg</span>
+                  </div>
+                  <div class="bg-slate-800/50 p-2.5 rounded-lg border border-slate-700/50">
+                    <span class="text-slate-400 block text-[10px]">Dose Prescrita</span>
+                    <span class="text-sm font-bold text-intensi-accent">0.15 mcg/kg/min</span>
+                  </div>
+                </div>
+
+                <!-- Resultado de Titulação em Destaque Clínico -->
+                <div class="bg-gradient-to-br from-intensi-navy to-intensi-dark rounded-xl p-3.5 border border-intensi-accent/40 text-center relative overflow-hidden">
+                  <div class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider">Velocidade de Perfusão na Bomba</div>
+                  <div class="text-3xl font-extrabold text-white mt-1 tracking-tight">
+                    7.88 <span class="text-sm font-normal text-intensi-accent">mL/h</span>
+                  </div>
+                  <div class="mt-2 text-[10px] text-emerald-400 flex items-center justify-center space-x-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span>Dose dentro dos parâmetros de segurança</span>
+                  </div>
+                </div>
+
+                <!-- Gráfico Rápido de PAM / Alvo Hemodinâmico -->
+                <div class="bg-slate-800/40 rounded-xl p-2.5 border border-slate-800 flex items-center justify-between text-xs">
+                  <div>
+                    <span class="text-[10px] text-slate-400">PAM Atual</span>
+                    <span class="block font-bold text-amber-400">58 mmHg</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-[10px] text-slate-400">Alvo Clínico</span>
+                    <span class="block font-bold text-emerald-400">&ge; 65 mmHg</span>
+                  </div>
+                </div>
+
+                <!-- Rodapé da Interface do Mockup -->
+                <div class="pt-1 flex items-center justify-between text-[10px] text-slate-400">
+                  <span class="flex items-center space-x-1">
+                    <svg class="w-3 h-3 text-intensi-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+                    <span>Cálculo instantâneo</span>
+                  </span>
+                  <span class="text-slate-500">v2.4 Pro</span>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Selo Flutuante de Validação Médica -->
+            <div class="absolute -bottom-4 -left-6 bg-white text-intensi-dark px-3.5 py-2 rounded-xl shadow-xl border border-slate-200 flex items-center space-x-2.5 animate-bounce" style="animation-duration: 4s;">
+              <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">✓</div>
+              <div class="text-left">
+                <p class="text-xs font-bold leading-tight">Validação Clínica</p>
+                <p class="text-[10px] text-slate-500">Intensivistas Certificados</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       3. CATÁLOGO DE APLICAÇÕES (Vitrine de Produtos B2C)
+       ========================================================================= -->
+  <section id="aplicacoes" class="py-24 bg-intensi-lightBg relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-intensi-accent uppercase tracking-widest bg-intensi-accentSoft px-3 py-1 rounded-md">Portfólio de Software Clínico</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-intensi-dark mt-3 tracking-tight">
+          Ecossistema de Aplicações Clínicas
+        </h2>
+        <p class="text-base sm:text-lg text-intensi-muted mt-3">
+          Ferramentas práticas para médicos intensivistas, urgencistas, internos e profissionais de saúde.
+        </p>
+      </div>
+
+      <!-- Estrutura de Cartões: Produto Estrela em Destaque Superior + 3 Colunas Abaixo -->
+      <div class="space-y-8">
+        
+        <!-- ===================================================================
+             CARTÃO 1: PRODUTO ESTRELA (Vasoactivos - Destaque Amplo)
+             =================================================================== -->
+        <div class="bg-white rounded-2xl border-2 border-intensi-accent/40 shadow-premium overflow-hidden transition-all duration-300 hover:shadow-card-hover relative">
+          
+          <!-- Faixa Superior de Produto Estrela -->
+          <div class="bg-gradient-to-r from-intensi-dark via-intensi-navy to-intensi-dark px-6 py-2.5 flex items-center justify-between text-white">
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-intensi-accent animate-ping"></span>
+              <span class="text-xs font-bold uppercase tracking-wider text-intensi-accent">PRODUTO ESTRELA</span>
+              <span class="text-slate-400 text-xs hidden sm:inline">|</span>
+              <span class="text-xs text-slate-300 font-medium hidden sm:inline">Referência em Suporte Farmacológico Crítico</span>
+            </div>
+            <div class="text-[11px] bg-intensi-accent/20 border border-intensi-accent/40 text-intensi-accent font-semibold px-2.5 py-0.5 rounded-full">
+              Recomendado para UCI &amp; Urgência
+            </div>
+          </div>
+
+          <div class="p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Descrição e Funcionalidades (Esquerda) -->
+            <div class="lg:col-span-8 space-y-5">
+              
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                  Hemodinâmica / Choque &amp; UCI
+                </span>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  Segurança do Doente
+                </span>
+              </div>
+
+              <div>
+                <h3 class="text-3xl font-extrabold text-intensi-dark tracking-tight">
+                  Vasoactivos
+                </h3>
+                <p class="text-sm font-medium text-intensi-accent mt-0.5">Calculadora Avançada e Guia de Titulação em Perfusão Contínua</p>
+              </div>
+
+              <p class="text-slate-600 text-base leading-relaxed">
+                Calculadora clínica avançada e guia de suporte rápido para a preparação, diluição e titulação de fármacos vasoativos e inotrópicos em perfusão contínua. Conversão instantânea de doses (mcg/kg/min para mL/h), protocolos de estabilização hemodinâmica e segurança máxima na administração à cabeceira do doente crítico.
+              </p>
+
+              <!-- Lista de Recursos Clínicos Chave -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-sm text-slate-700">
+                <div class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-intensi-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Conversão bidirecional instantânea (mcg/kg/min &harr; mL/h)</span>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-intensi-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Diluições standard e personalizadas para hospitais</span>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-intensi-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Alertas visuais de dose máxima e teto terapêutico</span>
+                </div>
+                <div class="flex items-start space-x-2">
+                  <svg class="w-5 h-5 text-intensi-accent flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  <span>Protocolos de Choque Séptico, Cardiogénico e Anafilático</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Ações e Descarregamento (Direita) -->
+            <div class="lg:col-span-4 bg-slate-50 p-6 rounded-xl border border-slate-200/80 space-y-4 text-center">
+              <div class="text-xs uppercase font-bold text-slate-500 tracking-wider">Acesso Imediato à Ferramenta</div>
+              
+              <!-- Botão Google Play -->
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-3 rounded-xl text-sm font-semibold bg-intensi-dark hover:bg-intensi-navy text-white transition-all duration-200 shadow group">
+                <svg class="w-5 h-5 mr-2.5 text-intensi-accent group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3.609 1.814L13.792 12 3.61 22.186a2.41 2.41 0 01-.61-.715V2.53c.187-.29.4-.535.61-.716zm11.24 11.24l2.585 2.586-11.8 6.78 9.215-9.366zm0-2.108L5.634 1.58l11.8 6.78-2.586 2.586zm1.484 1.054l4.08 2.345c.98.563.98 1.48 0 2.043l-4.08 2.345-2.227-2.226 2.227-2.507z"/>
+                </svg>
+                Disponível no Google Play
+              </a>
+
+              <!-- Botão Web App (PWA) -->
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-3 rounded-xl text-sm font-semibold bg-white hover:bg-slate-100 text-intensi-dark border border-slate-300 transition-all duration-200">
+                <svg class="w-5 h-5 mr-2 text-intensi-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                </svg>
+                Aceder à Web App (PWA)
+              </a>
+
+              <p class="text-[11px] text-slate-500">Compatível com Android, iOS e Web Desktop. Instalação rápida sem necessidade de internet constante.</p>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- ===================================================================
+             FILA INFERIOR: CARTÕES 2, 3 E 4 (Grelha 3 Colunas)
+             =================================================================== -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- CARTÃO 2: StrokeGuide Pro -->
+          <div class="bg-white rounded-2xl border border-intensi-borderLight shadow-premium hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between p-7">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                  Neurocríticos / Urgência
+                </span>
+                <span class="text-[11px] font-bold text-slate-400">APP #02</span>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-bold text-intensi-dark tracking-tight">StrokeGuide Pro</h3>
+                <p class="text-xs font-medium text-intensi-accent">Apoio Decisório no AVC Hiperagudo</p>
+              </div>
+
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Guia interativo de apoio à decisão no manejo do AVC agudo. Inclui cálculo rápido de escalas neurológicas, verificação de critérios de trombólise, controlo rigoroso de janelas terapêuticas e algoritmos de atuação imediata.
+              </p>
+
+              <div class="pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-2">
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Escalas NIHSS e ASPECTS integradas</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Critérios de Trombólise e Trombectomia</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 space-y-2.5">
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-intensi-dark hover:bg-intensi-navy text-white transition-colors">
+                Disponível no Google Play
+              </a>
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition-colors">
+                Aceder à Web App (PWA)
+              </a>
+            </div>
+          </div>
+
+          <!-- CARTÃO 3: MalariaGrave Angola -->
+          <div class="bg-white rounded-2xl border border-intensi-borderLight shadow-premium hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between p-7">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  Doenças Infecciosas / UCI
+                </span>
+                <span class="text-[11px] font-bold text-slate-400">APP #03</span>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-bold text-intensi-dark tracking-tight">MalariaGrave Angola</h3>
+                <p class="text-xs font-medium text-intensi-accent">Protocolo Hospitalar &amp; Doses</p>
+              </div>
+
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Protocolo digital para o diagnóstico, estratificação de gravidade e tratamento da malária grave em contexto hospitalar. Cálculo automatizado de doses de artesunato, gestão de complicações e critérios de admissão em cuidados intensivos.
+              </p>
+
+              <div class="pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-2">
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Posologia exata de Artesunato IV por peso</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Estratificação segundo diretrizes nacionais</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 space-y-2.5">
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-intensi-dark hover:bg-intensi-navy text-white transition-colors">
+                Disponível no Google Play
+              </a>
+              <a href="#contacto" class="w-full inline-flex justify-center items-center px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 transition-colors">
+                Aceder à Web App (PWA)
+              </a>
+            </div>
+          </div>
+
+          <!-- CARTÃO 4: IntensiScore & Ventilação (Em Breve) -->
+          <div class="bg-gradient-to-b from-white to-slate-50 rounded-2xl border border-dashed border-intensi-accent/60 shadow-premium hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between p-7 relative">
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-cyan-50 text-cyan-800 border border-cyan-200">
+                  Monitorização &amp; Qualidade em UCI
+                </span>
+                <span class="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">EM BREVE</span>
+              </div>
+
+              <div>
+                <h3 class="text-xl font-bold text-intensi-dark tracking-tight">IntensiScore &amp; Ventilação</h3>
+                <p class="text-xs font-medium text-slate-500">Mecânica Ventilatória e Escores</p>
+              </div>
+
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Suite integrada para cálculos de mecânica ventilatória, monitorização multiparamétrica e indicadores de gravidade e carga de trabalho em cuidados intensivos (SOFA, APACHE II, NAS).
+              </p>
+
+              <div class="pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-2">
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Cálculo automatizado de Driving Pressure e Cstat</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-intensi-accent"></span>
+                  <span>Registo sequencial diário do SOFA</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6">
+              <button onclick="openNotificationModal('IntensiScore & Ventilação')" class="w-full inline-flex justify-center items-center px-4 py-3 rounded-xl text-xs font-bold bg-intensi-accent hover:bg-intensi-accentHover text-intensi-dark transition-all duration-200 shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                Receber Notificação de Lançamento
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       4. O DIFERENCIAL CLÍNICO-TECNOLÓGICO (Porquê a IntensiTech?)
+       ========================================================================= -->
+  <section id="diferencial" class="py-24 bg-white border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-intensi-accent uppercase tracking-widest bg-intensi-accentSoft px-3 py-1 rounded-md">Rigor &amp; Engenharia</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-intensi-dark mt-3 tracking-tight">
+          O Diferencial Clínico-Tecnológico
+        </h2>
+        <p class="text-base sm:text-lg text-intensi-muted mt-3">
+          Porquê a IntensiTech Solutions redefine as ferramentas médicas no espaço lusófono.
+        </p>
+      </div>
+
+      <!-- Três Colunas Minimalistas com Ícones Lineares em Ciano (#00A8CC) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Coluna 1 -->
+        <div class="p-8 rounded-2xl bg-intensi-lightBg border border-slate-200/80 hover:border-intensi-accent/40 transition-all duration-300 hover:shadow-premium group">
+          <div class="w-14 h-14 rounded-xl bg-white border border-intensi-accent/30 text-intensi-accent flex items-center justify-center mb-6 shadow-sm group-hover:scale-105 transition-transform">
+            <!-- Ícone: Estetoscópio & Raciocínio Clínico -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-intensi-dark mb-3 tracking-tight">
+            Criado por Médicos Intensivistas
+          </h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Cada algoritmo e fluxo de ecrã nasce da experiência clínica real em Unidades de Cuidados Intensivos e Serviços de Urgência, garantindo relevância médica absoluta e eliminação de passos desnecessários.
+          </p>
+        </div>
+
+        <!-- Coluna 2 -->
+        <div class="p-8 rounded-2xl bg-intensi-lightBg border border-slate-200/80 hover:border-intensi-accent/40 transition-all duration-300 hover:shadow-premium group">
+          <div class="w-14 h-14 rounded-xl bg-white border border-intensi-accent/30 text-intensi-accent flex items-center justify-center mb-6 shadow-sm group-hover:scale-105 transition-transform">
+            <!-- Ícone: Raio / Velocidade / Offline -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-intensi-dark mb-3 tracking-tight">
+            Desenho para Decisões em Segundos
+          </h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Interfaces limpas, sem ruído visual e com arquitetura <em>offline-first</em>, permitindo o acesso imediato a protocolos mesmo em áreas hospitalares isoladas ou com baixa conectividade à internet.
+          </p>
+        </div>
+
+        <!-- Coluna 3 -->
+        <div class="p-8 rounded-2xl bg-intensi-lightBg border border-slate-200/80 hover:border-intensi-accent/40 transition-all duration-300 hover:shadow-premium group">
+          <div class="w-14 h-14 rounded-xl bg-white border border-intensi-accent/30 text-intensi-accent flex items-center justify-center mb-6 shadow-sm group-hover:scale-105 transition-transform">
+            <!-- Ícone: Globo Lusófono / Localização Contextual -->
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-intensi-dark mb-3 tracking-tight">
+            Adaptado à Realidade Lusófona
+          </h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Terminologia clínica rigorosa em português de Portugal e algoritmos alinhados com a disponibilidade farmacológica, formulários terapêuticos e protocolos hospitalares de Angola e países de língua oficial portuguesa.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       5. RESPALDO E CREDIBILIDADE (Sobre Nós & Serviços B2B)
+       ========================================================================= -->
+  <section id="sobre-nos" class="py-24 hero-gradient text-white relative overflow-hidden">
+    <!-- Efeito de Luz de Fundo -->
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-intensi-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold text-intensi-accent uppercase tracking-widest bg-white/5 border border-intensi-accent/30 px-3.5 py-1 rounded-full">Instituição &amp; Parcerias</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">
+          Respaldo Clínico e Soluções Hospitalares
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        
+        <!-- Bloco 1: Visão Institucional -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 sm:p-10 backdrop-blur-md flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="inline-flex items-center space-x-2 text-intensi-accent text-sm font-semibold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              <span>Visão Institucional</span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-white tracking-tight">
+              A ponte entre a Medicina Crítica e a Engenharia de Software
+            </h3>
+
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              A <strong>IntensiTech Solutions</strong> nasce em Luanda para fechar a lacuna entre a medicina crítica de alta complexidade e a engenharia de software moderna.
+            </p>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Entendemos que no ambiente de cuidados intensivos e emergência, cada segundo conta e cada erro de cálculo tem consequências severas. Por isso, aliamos a prática clínica direta ao desenvolvimento tecnológico de precisão, apoiando tanto a tomada de decisão diária como a formação médica contínua em hospitais públicos e privados.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+            <span>Sede: Luanda, Angola</span>
+            <span class="text-intensi-accent font-semibold">Sociedade Unipessoal Lda.</span>
+          </div>
+        </div>
+
+        <!-- Bloco 2: Bloco Corporativo (Consultoria e B2B) -->
+        <div class="bg-gradient-to-br from-intensi-navy to-intensi-dark border border-intensi-accent/30 rounded-2xl p-8 sm:p-10 shadow-glow-cyan flex flex-col justify-between space-y-6">
+          <div class="space-y-4">
+            <div class="inline-flex items-center space-x-2 text-intensi-accent text-sm font-semibold">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Serviços B2B para Clínicas e Hospitais</span>
+            </div>
+
+            <h3 class="text-2xl font-bold text-white tracking-tight">
+              Consultoria &amp; Digitalização de Protocolos à Medida
+            </h3>
+
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+              Apoiamos departamentos hospitalares, serviços de anestesiologia e comissões clínicas na transformação dos seus manuais em papel em fluxos de trabalho digitais de alto impacto:
+            </p>
+
+            <ul class="space-y-2.5 text-sm text-slate-300">
+              <li class="flex items-start space-x-2.5">
+                <span class="text-intensi-accent font-bold mt-0.5">&bull;</span>
+                <span>Digitalização de protocolos institucionais próprios com o formulário farmacológico do seu hospital.</span>
+              </li>
+              <li class="flex items-start space-x-2.5">
+                <span class="text-intensi-accent font-bold mt-0.5">&bull;</span>
+                <span>Implementação de painéis digitais de indicadores de qualidade e taxa de ocupação da UCI.</span>
+              </li>
+              <li class="flex items-start space-x-2.5">
+                <span class="text-intensi-accent font-bold mt-0.5">&bull;</span>
+                <span>Workshops técnicos e capacitação de equipas médicas e de enfermagem intensiva.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-white/10">
+            <a href="#contacto" class="inline-flex items-center justify-center w-full px-6 py-3 rounded-xl text-sm font-bold bg-intensi-accent hover:bg-intensi-accentHover text-intensi-dark transition-all duration-200">
+              Solicitar Apresentação Institucional B2B
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       FORMULÁRIO DE CONTACTO RÁPIDO
+       ========================================================================= -->
+  <section id="contacto" class="py-20 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="bg-white rounded-2xl p-8 sm:p-12 shadow-premium border border-slate-200">
+        <div class="text-center max-w-xl mx-auto mb-8">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-intensi-dark">Entre em Contacto Connosco</h2>
+          <p class="text-sm text-slate-600 mt-2">Dúvidas clínicas, parcerias hospitalares ou sugestões para as aplicações.</p>
+        </div>
+
+        <form onsubmit="handleContactSubmit(event)" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Nome Completo</label>
+              <input type="text" required placeholder="Dr. Manuel Silva" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-intensi-accent focus:ring-2 focus:ring-intensi-accent/20 transition-all">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">E-mail Profissional</label>
+              <input type="email" required placeholder="m.silva@hospital.co.ao" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-intensi-accent focus:ring-2 focus:ring-intensi-accent/20 transition-all">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Instituição / Hospital</label>
+              <input type="text" placeholder="Hospital Geral ou Clínica" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-intensi-accent focus:ring-2 focus:ring-intensi-accent/20 transition-all">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Assunto de Interesse</label>
+              <select class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white focus:outline-none focus:border-intensi-accent focus:ring-2 focus:ring-intensi-accent/20 transition-all">
+                <option value="vasoactivos">Aplicação Vasoactivos (Dúvidas ou Feedback)</option>
+                <option value="b2b">Soluções e Protocolos para Hospitais (B2B)</option>
+                <option value="parceria">Parceria Académica ou Clínica</option>
+                <option value="outro">Outro Assunto</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">Mensagem</label>
+            <textarea rows="4" required placeholder="Escreva a sua mensagem ou pedido de demonstração..." class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-intensi-accent focus:ring-2 focus:ring-intensi-accent/20 transition-all"></textarea>
+          </div>
+
+          <div class="pt-2 text-center">
+            <button type="submit" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-sm bg-intensi-accent hover:bg-intensi-accentHover text-intensi-dark transition-all duration-200 shadow-glow-cyan">
+              Enviar Mensagem
+            </button>
+          </div>
+        </form>
+
+        <div id="contact-success-msg" class="hidden mt-4 p-4 rounded-xl bg-emerald-50 text-emerald-800 text-sm text-center border border-emerald-200">
+          Obrigado pelo seu contacto. A nossa equipa clínica responderá com a maior brevidade possível.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       6. PIE DE PÁGINA LEGAL (Footer) — Essencial para Google Play e Apple
+       ========================================================================= -->
+  <footer class="bg-intensi-dark text-slate-400 py-16 border-t border-slate-800 font-sans">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      
+      <!-- Linha Superior do Footer: Marca & Contacto -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        
+        <div class="md:col-span-6 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-lg bg-intensi-navy border border-intensi-accent/30 flex items-center justify-center">
+              <svg class="w-5 h-5 text-intensi-accent" viewBox="0 0 40 40" fill="none">
+                <path d="M16 6C16 4.89543 16.8954 4 18 4H22C23.1046 4 24 4.89543 24 6V15H33C34.1046 15 35 15.8954 35 17V21C35 22.1046 34.1046 23 33 23H24V32C24 33.1046 23.1046 34 22 34H18C16.8954 34 16 33.1046 16 32V23H7C5.89543 23 5 22.1046 5 21V17C5 15.8954 5.89543 15 7 15H16V6Z" stroke="currentColor" stroke-width="2.5"/>
+              </svg>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-white">Intensi<span class="text-intensi-accent">Tech</span> Solutions</span>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+            Pioneira em engenharia de software médico de suporte à decisão crítica em Angola e na comunidade médica lusófona.
+          </p>
+        </div>
+
+        <div class="md:col-span-6 flex flex-col md:items-end justify-between space-y-3">
+          <div class="text-xs text-slate-300">
+            <span class="font-semibold text-white">Canal Institucional Direto:</span>
+            <a href="mailto:contacto@intensitechsolutions.com" class="text-intensi-accent hover:underline block md:inline md:ml-1">
+              contacto@intensitechsolutions.com
+            </a>
+          </div>
+          <div class="flex flex-wrap gap-4 text-xs">
+            <button onclick="openModal('modal-privacidade')" class="hover:text-intensi-accent transition-colors underline">Política de Privacidade</button>
+            <span class="text-slate-600">&bull;</span>
+            <button onclick="openModal('modal-termos')" class="hover:text-intensi-accent transition-colors underline">Termos e Condições de Uso</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- AVISO MÉDICO OBRIGATÓRIO (Medical Disclaimer exigido pelo Google Play / App Store) -->
+      <div class="p-4 sm:p-5 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-400 leading-relaxed">
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+          <div>
+            <strong class="text-slate-300 uppercase tracking-wide block mb-1">Aviso Médico Obrigatório (Medical Disclaimer):</strong>
+            <p>
+              &ldquo;As aplicações da IntensiTech Solutions destinam-se exclusivamente a profissionais de saúde qualificados como ferramentas de apoio informativo e educativo, não substituindo o julgamento clínico individual.&rdquo;
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Direitos de Autor e Informação Legal da Sociedade -->
+      <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 text-center sm:text-left gap-2">
+        <p>
+          &copy; 2026 IntensiTech Solutions, Sociedade Unipessoal Lda. &mdash; Luanda, Angola. Todos os direitos reservados.
+        </p>
+        <p class="text-slate-500">
+          Desenvolvido com padrão <span class="text-slate-300 font-medium">Consulting Premium</span>
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- =========================================================================
+       MODAIS (Notificação de Lançamento & Políticas Legais)
+       ========================================================================= -->
+
+  <!-- Modal de Notificação para Novas Apps -->
+  <div id="modal-notificacao" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+      <button onclick="closeModal('modal-notificacao')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <div class="text-center space-y-3">
+        <div class="w-12 h-12 rounded-full bg-cyan-100 text-intensi-accent mx-auto flex items-center justify-center">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        </div>
+        <h3 id="modal-app-title" class="text-xl font-bold text-intensi-dark">Receber Alerta de Lançamento</h3>
+        <p class="text-xs text-slate-600">Insira o seu e-mail para ter acesso prioritário ao programa de testes beta e notificação de publicação na loja.</p>
+      </div>
+
+      <form onsubmit="handleNotifySubmit(event)" class="mt-6 space-y-4">
+        <input type="email" required placeholder="seu.email@exemplo.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-intensi-accent">
+        <button type="submit" class="w-full py-3 rounded-xl font-bold text-sm bg-intensi-accent text-intensi-dark hover:bg-intensi-accentHover transition-colors">
+          Garantir Acesso Antecipado
+        </button>
+      </form>
+      <div id="notify-success" class="hidden mt-3 text-xs text-emerald-600 text-center font-semibold">
+        Registo confirmado com sucesso! Entraremos em contacto brevemente.
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Política de Privacidade (URL exigida pelo Google Play Console) -->
+  <div id="modal-privacidade" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 max-h-[85vh] overflow-y-auto shadow-2xl relative">
+      <button onclick="closeModal('modal-privacidade')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <h3 class="text-2xl font-bold text-intensi-dark mb-4">Política de Privacidade</h3>
+      <p class="text-xs text-slate-500 mb-4">Última atualização: Outubro de 2026 &bull; IntensiTech Solutions, Sociedade Unipessoal Lda.</p>
+
+      <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+        <p>A <strong>IntensiTech Solutions</strong> está empenhada na proteção da privacidade dos utilizadores das suas aplicações e sítio web institucional, cumprindo as normas internacionais de proteção de dados.</p>
+        
+        <h4 class="text-sm font-bold text-intensi-dark pt-2">1. Dados Clínicos e Tratamento de Doentes</h4>
+        <p>As nossas ferramentas operam sob a arquitetura de processamento local (<em>on-device</em>). Os valores inseridos para cálculos clínicos (tais como peso do doente, débitos ou escalas neurológicas) <strong>nunca são transmitidos nem armazenados em servidores remotos</strong>, assegurando total sigilo médico e confidencialidade hospitalar.</p>
+
+        <h4 class="text-sm font-bold text-intensi-dark pt-2">2. Recolha de Dados Técnicos</h4>
+        <p>Apenas podemos recolher dados estritamente anónimos de diagnóstico de falhas técnicas (<em>crash reports</em>) com a finalidade exclusiva de correção de bugs e estabilidade dos algoritmos.</p>
+
+        <h4 class="text-sm font-bold text-intensi-dark pt-2">3. Contacto do Responsável de Privacidade</h4>
+        <p>Para o esclarecimento de dúvidas sobre esta política, poderá contactar: <strong class="text-intensi-accent">contacto@intensitechsolutions.com</strong>.</p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-200 text-right">
+        <button onclick="closeModal('modal-privacidade')" class="px-5 py-2 rounded-xl text-xs font-semibold bg-intensi-dark text-white hover:bg-intensi-navy">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Termos de Uso -->
+  <div id="modal-termos" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 max-h-[85vh] overflow-y-auto shadow-2xl relative">
+      <button onclick="closeModal('modal-termos')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <h3 class="text-2xl font-bold text-intensi-dark mb-4">Termos e Condições de Uso</h3>
+      <p class="text-xs text-slate-500 mb-4">IntensiTech Solutions, Sociedade Unipessoal Lda. &bull; Luanda, Angola</p>
+
+      <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
+        <p>Ao aceder ou utilizar qualquer software da IntensiTech Solutions, o utilizador concorda expressamente com os seguintes termos:</p>
+        <p><strong>1. Uso Profissional:</strong> As aplicações são desenvolvidas como ferramentas de suporte e cálculo rápido para médicos, enfermeiros e profissionais de saúde com licença de exercício profissional válida.</p>
+        <p><strong>2. Não Substituição do Juízo Clínico:</strong> Nenhuma recomendação gerada pelos algoritmos substitui a avaliação clínica direta, a anamnese e a verificação independente das doses farmacológicas antes da administração aos doentes.</p>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-200 text-right">
+        <button onclick="closeModal('modal-termos')" class="px-5 py-2 rounded-xl text-xs font-semibold bg-intensi-dark text-white hover:bg-intensi-navy">Compreendi e Aceito</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       SCRIPTS JAVASCRIPT LEVES
+       ========================================================================= -->
+  <script>
+    // Menu Mobile Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Fechar menu mobile ao clicar num link
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Gestão de Modais
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openNotificationModal(appName) {
+      document.getElementById('modal-app-title').innerText = `Notificação: ${appName}`;
+      openModal('modal-notificacao');
+    }
+
+    // Formulário de Contacto
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById('contact-success-msg');
+      msg.classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => {
+        msg.classList.add('hidden');
+      }, 6000);
+    }
+
+    // Formulário de Notificação Beta
+    function handleNotifySubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById('notify-success');
+      msg.classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => {
+        closeModal('modal-notificacao');
+        msg.classList.add('hidden');
+      }, 2500);
+    }
+
+    // Fechar modais com tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal('modal-notificacao');
+        closeModal('modal-privacidade');
+        closeModal('modal-termos');
+      }
+    });
+  </script>
+
+</body>
+</html>
