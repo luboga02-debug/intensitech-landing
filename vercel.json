@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/intensitech-landing" },
+    { "source": "/(.*)", "destination": "/intensitech-landing/$1" }
+  ]
+}
