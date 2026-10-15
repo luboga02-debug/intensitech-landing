@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>VasoActivos UCI — Calculadora de Drogas Vasoactivas</title>
+  <meta name="description" content="Calculadora de Drogas Vasoactivas y Soporte Clínico en UCI — Desarrollado por Dr. Luis Enrique Borroto Garcia, MD, MsC">
+  <meta name="theme-color" content="#0A1628">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+
+  <!-- =====================================================================
+       1️⃣  GOOGLE ADSENSE — Coloca tu Publisher ID aquí y en app.js
+       =====================================================================
+       PASOS:
+         1. Abre https://adsense.google.com/start/ y regístrate GRATIS
+         2. Como "URL de tu web" pon el dominio público Netlify (ej: https://xxxx.netlify.app)
+         3. Google te dará un ID tipo: ca-pub-1234567890123456
+         4. REEMPLAZA "ca-pub-XXXXXXXXXXXXXXXX" con tu ID (en los 2 sitios):
+              • Aquí, en el <script src="..."> del <head>
+              • En app.js, dentro de MONO_CONFIG.adsensePubId
+         5. Sube de nuevo la carpeta a Netlify
+         6. En 2-7 días Google revisará y activará tu cuenta — ¡empiezas a cobrar!
+       ===================================================================== -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- MARCA DE AGUA INVISIBLE (anti-clonado - NO BORRAR)
+       Si alguien roba este código fuente y publica una web pirata,
+       estos datos serán visibles en el HTML para demostrar que es TU creación.
+       Autor original: Dr. Luis Enrique Borroto Garcia - UCI Angola
+       WhatsApp oficial: +244 932 708 186
+       Email oficial: luboga02@gmail.com
+       Web oficial: https://vasoactivos-uci.netlify.app
+       PROHIBIDA LA REVENTA O DISTRIBUCIÓN SIN AUTORIZACIÓN EXPRESA. -->
+  <div aria-hidden="true" style="position:fixed; left:-99999px; top:-99999px; pointer-events:none; opacity:0.0001; user-select:none;">
+    VasoActivos UCI · Dr. Luis Enrique Borroto Garcia (MD MSc) · Angola · Whatsapp +244 932 708 186 · luboga02@gmail.com · Web oficial vasoactivos-uci.netlify.app · PROHIBIDA LA REVENTA O COPIA SIN PERMISO EXPRESO DEL AUTOR.
+  </div>
+  <!-- FIN MARCA DE AGUA INVISIBLE -->
+
+  <!-- Banner anti-clon: visible SOLO si la web corre en un dominio NO oficial -->
+  <div id="anticlon-banner" aria-hidden="true" style="display:none; position:sticky; top:0; z-index:999999; background:#ff9800; color:#000; font-weight:700; padding:8px 12px; text-align:center; font-size:0.85rem; box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+    ⚠️ ESTA ES UNA COPIA NO AUTORIZADA. Versión ORIGINAL y SOPORTE OFICIAL en
+    <a href="https://vasoactivos-uci.netlify.app" style="color:#000; text-decoration:underline;">vasoactivos-uci.netlify.app</a>
+    · WhatsApp autorizado: <a href="https://wa.me/244932708186" style="color:#000; text-decoration:underline;">+244 932 708 186</a>
+  </div>
+
+  <!-- Encabezado de la Aplicación -->
+  <header class="app-header">
+    <div class="brand-wrapper">
+      <img src="./icon.svg" alt="VasoActivos UCI" class="brand-logo">
+      <div>
+        <h1 class="brand-title"><span data-i18n="app_title">VasoActivos UCI</span></h1>
+        <span class="brand-subtitle" data-i18n="app_subtitle">Dr. Luis Enrique Borroto Garcia, MD, MsC</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- Botón PRO (Monetización) -->
+      <button class="icon-btn" id="btn-header-pro" title="Upgrade PRO" style="font-size:0.8rem; font-weight:900; color:#FFD700;">👑</button>
+      <!-- Botón Diurno / Nocturno -->
+      <button class="icon-btn" id="btn-header-theme" title="Modo Diurno / Nocturno">🌙</button>
+      <!-- Selector Rápido de Idioma -->
+      <button class="lang-badge-btn" id="btn-header-lang" title="Cambiar Idioma">ES</button>
+      <!-- Aviso Legal -->
+      <button class="icon-btn" id="btn-header-disclaimer" title="Aviso Legal">⚠️</button>
+      <!-- Ajustes -->
+      <button class="icon-btn" onclick="switchView('settings')" title="Ajustes">⚙️</button>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal de Vistas -->
+  <main class="container">
+
+    <!-- 1. VISTA DASHBOARD -->
+    <section id="view-dashboard" class="view-section active">
+      <div style="text-align:center; margin-bottom:20px; padding:10px 0;">
+        <h2 style="font-size:1.35rem; font-weight:800; color:var(--text-main);" data-i18n="hero_title">
+          Medicina Intensiva &amp; Cuidados Críticos
+        </h2>
+        <p style="font-size:0.8rem; color:var(--text-secondary);" data-i18n="hero_subtitle">
+          Herramientas farmacológicas basadas en evidencia (SSC 2026 / ACC-AHA 2025 / ESICM 2024)
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card card-clickable hub-card" data-target="calculator">
+          <div class="hub-card-icon">🧮</div>
+          <div class="hub-card-title" data-i18n="card_calc_title">Calculadora de Infusión</div>
+          <div class="hub-card-desc" data-i18n="card_calc_desc">Dosis ↔ mL/h con titulación</div>
+        </div>
+
+        <div class="card card-clickable hub-card" data-target="hemo" id="hub-card-hemo">
+          <div class="hub-card-icon">🫀</div>
+          <div class="hub-card-title" data-i18n="card_hemo_title">Perfil Hemodinámico &amp; Perfusión <span class="pro-badge" id="badge-hemo">PRO</span></div>
+          <div class="hub-card-desc" data-i18n="card_hemo_desc">RVS, IS, CRT, ScvO2 y fenotipos</div>
+        </div>
+
+        <div class="card card-clickable hub-card" data-target="prep">
+          <div class="hub-card-icon">🧪</div>
+          <div class="hub-card-title" data-i18n="card_prep_title">Preparación de Mezclas</div>
+          <div class="hub-card-desc" data-i18n="card_prep_desc">Dilución y duración de bolsa</div>
+        </div>
+
+        <div class="card card-clickable hub-card" data-target="shock" id="hub-card-shock">
+          <div class="hub-card-icon">🔴</div>
+          <div class="hub-card-title" data-i18n="card_shock_title">Selector de Shock <span class="pro-badge" id="badge-shock">PRO</span></div>
+          <div class="hub-card-desc" data-i18n="card_shock_desc">Algoritmos guiados con decisión</div>
+        </div>
+
+        <div class="card card-clickable hub-card" data-target="drugs">
+          <div class="hub-card-icon">💊</div>
+          <div class="hub-card-title" data-i18n="card_drugs_title">Guía de Fármacos</div>
+          <div class="hub-card-desc" data-i18n="card_drugs_desc">22 fichas clínicas completas</div>
+        </div>
+
+        <div class="card card-clickable hub-card" data-target="education">
+          <div class="hub-card-icon">🎓</div>
+          <div class="hub-card-title" data-i18n="card_edu_title">Evidencia Científica</div>
+          <div class="hub-card-desc" data-i18n="card_edu_desc">Ensayos 2021-2026 y consensos</div>
+        </div>
+
+        <!-- Tarjeta PRO: Upgrade -->
+        <div class="card card-clickable hub-card" id="hub-card-upgrade" style="background:linear-gradient(135deg, rgba(212,175,55,0.18), rgba(8,145,178,0.10)); border:1.5px solid #FFD700;">
+          <div class="hub-card-icon">👑</div>
+          <div class="hub-card-title" id="hub-card-upgrade-title" style="color:#FFD700;" data-i18n="hub_card_upgrade_title">Desbloquea PRO</div>
+          <div class="hub-card-desc" id="hub-card-upgrade-desc" data-i18n="hub_card_upgrade_desc">Sin publicidad + Profiler + Árboles Shock</div>
+        </div>
+
+        <!-- Tarjeta Donaciones / Soporte -->
+        <div class="card card-clickable hub-card support-hub-card" id="hub-card-support">
+          <div class="hub-card-icon">💛</div>
+          <div class="hub-card-title" id="hub-card-support-title" data-i18n="hub_card_support_title">Apoya este proyecto</div>
+          <div class="hub-card-desc" id="hub-card-support-desc" data-i18n="hub_card_support_desc">Transferencia bancaria · Pago por referencia</div>
+        </div>
+      </div>
+
+      <!-- Banner Publicitario 1 (Dashboard) - AdSense Placeholder -->
+      <div class="ad-banner" id="adsense-banner-dashboard">
+        <div class="ad-banner-text" id="ad-banner-text-dashboard" data-i18n-html="ad_dashboard_text">
+          🔒 Actualiza a <strong>PRO</strong> para eliminar esta publicidad y desbloquear las funciones avanzadas del Profiler Hemodinámico y los 6 árboles de decisión de Shock.
+        </div>
+        <div class="ad-banner-cta" id="ad-banner-cta-dashboard" onclick="openMonoModal('pro')" data-i18n="ad_dashboard_cta">👉 Quiero PRO — Más información</div>
+        <ins class="adsbygoogle ad-ins"
+             style="display:none"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1111111111"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </section>
+
+    <!-- 2. VISTA CALCULADORA DE INFUSIÓN -->
+    <section id="view-calculator" class="view-section">
+      <div class="card">
+        <h2 style="font-size:1.15rem; font-weight:800; color:var(--accent); margin-bottom:14px; text-align:center;" data-i18n="calc_header">
+          Calculadora de Infusión Continua
+        </h2>
+
+        <div class="tabs">
+          <button class="tab-btn active" id="tab-mode-a" data-i18n="calc_tab_dose_to_rate">Dosis → Velocidad (mL/h)</button>
+          <button class="tab-btn" id="tab-mode-b" data-i18n="calc_tab_rate_to_dose">Velocidad → Dosis</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="calc_label_drug">Fármaco Vasoactivo:</label>
+          <select id="calc-drug" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="calc_label_conc">Concentración de la Solución:</label>
+          <select id="calc-conc" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="calc_label_weight">Peso del Paciente (kg):</label>
+          <input type="number" id="calc-weight" class="form-control" value="70" step="1" min="1" max="250">
+        </div>
+
+        <div class="form-group" id="group-dose-input">
+          <label class="form-label" data-i18n="calc_label_dose">Dosis Deseada (mcg/kg/min):</label>
+          <input type="number" id="calc-dose" class="form-control" value="0.10" step="0.01" min="0">
+        </div>
+
+        <div class="form-group" id="group-rate-input" style="display:none;">
+          <label class="form-label" data-i18n="calc_label_rate">Velocidad de Infusión Actual (mL/h):</label>
+          <input type="number" id="calc-rate" class="form-control" value="26.25" step="0.1" min="0">
+        </div>
+
+        <div class="result-card" id="calc-result-box">
+          <div class="result-label" id="calc-result-label" data-i18n="calc_res_rate_label">Velocidad de Infusión Requerida:</div>
+          <div class="result-value" id="calc-result-value">26.25 mL/h</div>
+          <div class="titration-box" id="calc-titration"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. VISTA PERFIL HEMODINÁMICO & PERFUSIÓN TISULAR -->
+    <section id="view-hemo" class="view-section paywalled-wrap">
+      <div class="card paywalled" id="card-hemo-pro">
+        <!-- Paywall Overlay (visible si NO es PRO) -->
+        <div class="paywall-overlay" id="paywall-hemo">
+          <div class="paywall-icon">👑🔒</div>
+          <div class="paywall-title">Perfil Hemodinámico Avanzado</div>
+          <div class="paywall-desc">
+            Activa <strong>PRO</strong> para desbloquear el Profiler:
+            PAM, RVS, Índice de Shock, Perfusión Tisular, CRT, ScvO₂,
+            Gradiente P(v-a)CO₂ y <strong>Fenotipado Clínico Automatizado</strong>
+            con recomendaciones basadas en SSC 2026 / ACC-AHA 2025 / ESICM 2024.
+          </div>
+          <button class="paywall-mini-btn" onclick="openMonoModal('pro')">💎 Desbloquear PRO</button>
+        </div>
+
+        <h2 style="font-size:1.15rem; font-weight:800; color:var(--accent); margin-bottom:4px; text-align:center;" data-i18n="hemo_header">
+          Perfil Hemodinámico &amp; Perfusión al Pie de Cama
+        </h2>
+        <p style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-bottom:16px;" data-i18n="hemo_subtitle">
+          Integración Macro-Microhemodinámica (SSC 2026 / ACC-AHA 2025 / ANDROMEDA-SHOCK-2 / ESICM 2024)
+        </p>
+
+        <!-- Bloque 1: Presiones y Frecuencia -->
+        <div style="font-size:0.8rem; font-weight:700; color:var(--accent); margin-bottom:8px;" data-i18n="hemo_sec_macro">
+          📊 1. MACROHEMODINAMIA Y PRESIÓN DE PERFUSIÓN
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_sbp">Presión Sistólica (PAS, mmHg):</label>
+            <input type="number" id="hemo-sbp" class="form-control" value="100" step="5" min="30" max="260">
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_dbp">Presión Diastólica (PAD, mmHg):</label>
+            <input type="number" id="hemo-dbp" class="form-control" value="55" step="5" min="20" max="180">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_hr">Frecuencia Cardíaca (FC, lpm):</label>
+            <input type="number" id="hemo-hr" class="form-control" value="105" step="5" min="30" max="220">
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_cvp">Presión Venosa Central (PVC, mmHg):</label>
+            <input type="number" id="hemo-cvp" class="form-control" value="8" step="1" min="0" max="30">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="hemo_lbl_co">Gasto Cardíaco (GC / Débito, L/min):</label>
+          <input type="number" id="hemo-co" class="form-control" value="4.5" step="0.2" min="1.0" max="15.0">
+        </div>
+
+        <!-- Bloque 2: Perfusión Tisular y Microcirculación -->
+        <div style="font-size:0.8rem; font-weight:700; color:var(--accent); margin:14px 0 8px;" data-i18n="hemo_sec_micro">
+          🔬 2. PERFUSIÓN TISULAR Y METABOLISMO (ANDROMEDA-SHOCK-2 / ESICM)
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_crt">Tiempo Llenado Capilar (CRT, seg):</label>
+            <input type="number" id="hemo-crt" class="form-control" value="4.0" step="0.5" min="1.0" max="10.0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="hemo_lbl_scvo2">Saturación Venosa Central (ScvO2, %):</label>
+            <input type="number" id="hemo-scvo2" class="form-control" value="62" step="1" min="30" max="100">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="hemo_lbl_pvacogap">Gradiente Veno-Arterial CO2 (ΔP(v-a)CO2, mmHg):</label>
+          <input type="number" id="hemo-pvacogap" class="form-control" value="7.5" step="0.5" min="1.0" max="25.0">
+        </div>
+
+        <!-- Tarjeta de Resultados Hemodinámicos -->
+        <div class="result-card">
+          <div class="result-label" data-i18n="hemo_res_title">Resultados Hemodinámicos Calculados:</div>
+          
+          <div class="hemo-metrics-grid">
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">PAM</div>
+              <div class="hemo-metric-val" id="hemo-res-map">70.0</div>
+              <div class="hemo-metric-sub">mmHg (Meta &ge; 65)</div>
+            </div>
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">Presión Pulso</div>
+              <div class="hemo-metric-val" id="hemo-res-pp">45</div>
+              <div class="hemo-metric-sub">mmHg (PAS - PAD)</div>
+            </div>
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">Índice Shock (IS)</div>
+              <div class="hemo-metric-val" id="hemo-res-si">1.05</div>
+              <div class="hemo-metric-sub" id="hemo-res-si-sub">Alerta: &gt; 0.9</div>
+            </div>
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">RVS</div>
+              <div class="hemo-metric-val" id="hemo-res-svr">1102</div>
+              <div class="hemo-metric-sub">dyn·s·cm⁻⁵ (800-1200)</div>
+            </div>
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">Perfusión Tisular</div>
+              <div class="hemo-metric-val" id="hemo-res-perf">62.0</div>
+              <div class="hemo-metric-sub">mmHg (PAM - PVC)</div>
+            </div>
+            <div class="hemo-metric-box">
+              <div class="hemo-metric-label">Llenado Capilar</div>
+              <div class="hemo-metric-val" id="hemo-res-crt">4.0s</div>
+              <div class="hemo-metric-sub" id="hemo-res-crt-sub">Anormal (&gt; 3.0s)</div>
+            </div>
+          </div>
+
+          <!-- Diagnóstico Fenotípico Automatizado -->
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:10px; padding:12px; margin-top:14px; text-align:left;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary);" data-i18n="hemo_lbl_phenotype">FENOTIPO CLÍNICO DIAGNOSTICADO:</span>
+              <span class="badge" id="hemo-phenotype-badge" style="background:var(--alert-warning); color:#fff;">FENOTIPO MIXTO</span>
+            </div>
+            <h3 id="hemo-phenotype-title" style="font-size:1.05rem; font-weight:800; color:var(--text-main); margin-bottom:6px;"></h3>
+            <p id="hemo-phenotype-desc" style="font-size:0.8rem; color:var(--text-secondary); line-height:1.4; margin-bottom:10px;"></p>
+
+            <div style="border-top:1px solid var(--border-color); padding-top:8px;">
+              <strong style="font-size:0.78rem; color:var(--accent);" data-i18n="hemo_lbl_reco">🎯 RECOMENDACIÓN TERAPÉUTICA FARMACOLÓGICA (GUÍAS):</strong>
+              <p id="hemo-phenotype-reco" style="font-size:0.82rem; color:var(--text-main); line-height:1.45; margin-top:4px;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. VISTA PREPARACIÓN DE MEZCLAS -->
+    <section id="view-prep" class="view-section">
+      <div class="card">
+        <h2 style="font-size:1.15rem; font-weight:800; color:var(--accent); margin-bottom:14px; text-align:center;" data-i18n="prep_header">
+          Calculadora de Diluciones y Mezclas
+        </h2>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="prep_label_presets">Plantillas Estándar UCI:</label>
+          <select id="prep-preset" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="prep_label_mg">Cantidad de Fármaco (mg o UI):</label>
+          <input type="number" id="prep-mg" class="form-control" value="4.0" step="0.1" min="0">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="prep_label_vol">Volumen Total de Mezcla (mL):</label>
+          <input type="number" id="prep-vol" class="form-control" value="250" step="10" min="10">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="calc_label_weight">Peso del Paciente (kg):</label>
+          <input type="number" id="prep-weight" class="form-control" value="70" step="1" min="1">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-i18n="prep_label_dose">Dosis Objetivo (mcg/kg/min):</label>
+          <input type="number" id="prep-dose" class="form-control" value="0.10" step="0.01" min="0">
+        </div>
+
+        <div class="result-card">
+          <div class="result-label" data-i18n="prep_res_conc">Concentración Final:</div>
+          <div class="result-value" id="prep-res-conc">16.00 mcg/mL</div>
+          <div style="margin: 10px 0; font-size:0.85rem;">
+            <span data-i18n="prep_res_rate">Velocidad resultante:</span> <strong id="prep-res-rate" style="color:var(--accent);">26.25 mL/h</strong>
+          </div>
+          <div style="font-size:0.85rem;">
+            <span data-i18n="prep_res_duration">Duración estimada de la bolsa:</span> <strong id="prep-res-duration" style="color:var(--text-main);">9 horas y 31 minutos</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. VISTA GUÍA DE FÁRMACOS -->
+    <section id="view-drugs" class="view-section">
+      <div style="margin-bottom:12px;">
+        <input type="text" id="drug-search" class="form-control" data-i18n-ph="drugs_search_placeholder" placeholder="🔍 Buscar por nombre o indicación...">
+      </div>
+
+      <div class="chips-wrapper">
+        <button class="filter-chip active" data-cat="ALL" data-i18n="filter_all">Todos (22)</button>
+        <button class="filter-chip" data-cat="VASOPRESOR" data-i18n="filter_vasopressor">Vasopresores</button>
+        <button class="filter-chip" data-cat="INOTROPICO" data-i18n="filter_inotropic">Inotrópicos</button>
+        <button class="filter-chip" data-cat="INODILADOR" data-i18n="filter_inodilator">Inodiladores</button>
+        <button class="filter-chip" data-cat="VASODILATADOR" data-i18n="filter_vasodilator">Vasodilatadores</button>
+        <button class="filter-chip" data-cat="ADYUVANTE" data-i18n="filter_adjuvant">Adyuvantes</button>
+      </div>
+
+      <div class="card" style="padding:0; overflow:hidden;" id="drug-list-container">
+        <!-- Renderizado dinámicamente con DRUGS_DATA -->
+      </div>
+    </section>
+
+    <!-- 6. VISTA SELECTOR DE SHOCK (6 ESCENARIOS COMPLETOS) -->
+    <section id="view-shock" class="view-section paywalled-wrap">
+      <div style="text-align:center; margin-bottom:16px;">
+        <h2 style="font-size:1.25rem; font-weight:800; color:var(--text-main);" data-i18n="shock_selector_title">
+          Selector de Shock Clínico <span class="pro-badge" style="margin-left:6px;">PRO</span>
+        </h2>
+        <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_selector_desc">
+          Seleccione el escenario clínico para abrir el algoritmo guiado con árbol de decisiones
+        </p>
+      </div>
+
+      <div class="card paywalled" id="card-shock-selector" style="position:relative; overflow:hidden;">
+        <div class="paywall-overlay" id="paywall-shock">
+          <div class="paywall-icon">👑🔴</div>
+          <div class="paywall-title" data-i18n="paywall_shock_title">6 Árboles de Decisión de Shock</div>
+          <div class="paywall-desc" data-i18n-html="paywall_shock_desc">
+            Actualiza a <strong>PRO</strong> para acceder a los algoritmos interactivos completos:
+            Shock Séptico, Cardiogénico, Anafiláctico, Hipovolémico, Obstructivo y Mixto,
+            con preguntas guiadas, recomendaciones basadas en guías SSC 2026 / ACC-AHA 2025
+            y fichas de fármacos en 1 clic.
+          </div>
+          <button class="paywall-mini-btn" onclick="openMonoModal('pro')" data-i18n="paywall_shock_btn">💎 Desbloquear 6 Escenarios</button>
+        </div>
+
+        <!-- 1. Séptico -->
+        <div class="card card-clickable shock-type-card" data-shock="septic" style="border-left:5px solid var(--cat-vasopresor); margin: 0 12px 10px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_septic_title">🔴 Shock Séptico (Distributivo)</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_septic_desc">Guías SSC 2026: Cristaloides 30 mL/kg → Noradrenalina → Vasopresina + Hidrocortisona</p>
+        </div>
+
+        <!-- 2. Cardiogénico -->
+        <div class="card card-clickable shock-type-card" data-shock="cardiogenic_ami" style="border-left:5px solid var(--cat-inotropico); margin: 0 12px 10px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_cardio_title">💚 Shock Cardiogénico (IAM / Fallo de Bomba)</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_cardio_desc">Guías ACC/AHA 2025: ICP primaria → Noradrenalina de soporte → Dobutamina / Impella (DanGer Shock 2024)</p>
+        </div>
+
+        <!-- 3. Anafiláctico -->
+        <div class="card card-clickable shock-type-card" data-shock="anaphylactic" style="border-left:5px solid var(--alert-warning); margin: 0 12px 10px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_ana_title">⚡ Shock Anafiláctico</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_ana_desc">Adrenalina IM inmediata (0.3-0.5 mg) → Adrenalina IV → Glucagón en betabloqueados</p>
+        </div>
+
+        <!-- 4. Hipovolémico -->
+        <div class="card card-clickable shock-type-card" data-shock="hypovolemic" style="border-left:5px solid var(--cat-vasodilatador); margin: 0 12px 10px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_hypo_title">🩸 Shock Hipovolémico (Hemorrágico y No Hemorrágico)</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_hypo_desc">Transfusión masiva 1:1:1 → Ácido Tranexámico → Hipotensión permisiva → Noradrenalina temporal</p>
+        </div>
+
+        <!-- 5. Obstructivo -->
+        <div class="card card-clickable shock-type-card" data-shock="obstructive" style="border-left:5px solid var(--alert-critical); margin: 0 12px 10px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_obs_title">🚧 Shock Obstructivo (TEP Masivo / Taponamiento / Neumotórax)</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_obs_desc">Desobstrucción de emergencia: Fibrinólisis / Pericardiocentesis / Drenaje pleural + Noradrenalina soporte</p>
+        </div>
+
+        <!-- 6. Mixto -->
+        <div class="card card-clickable shock-type-card" data-shock="mixed" style="border-left:5px solid var(--cat-adyuvante); margin: 0 12px 12px;">
+          <h3 style="font-size:0.95rem; font-weight:700;" data-i18n="shock_card_mixed_title">🔀 Shock Mixto (Multifactorial / Distributivo + Cardiogénico)</h3>
+          <p style="font-size:0.75rem; color:var(--text-secondary);" data-i18n="shock_card_mixed_desc">Fenotipado hemodinámico con POCUS → Terapia balanceada Noradrenalina + Inotrópico (Dobutamina/Levosimendán)</p>
+        </div>
+      </div>
+
+      <!-- Banner AdSense 2 (Shock) -->
+      <div class="ad-banner" id="adsense-banner-shock">
+        <div class="ad-banner-text" data-i18n="ad_shock_text">
+          👑 <strong>PRO</strong> elimina la publicidad y desbloquea 6 árboles de Shock con recomendaciones basadas en guías internacionales.
+        </div>
+        <div class="ad-banner-cta" onclick="openMonoModal('pro')">👉 Ver planes PRO</div>
+      </div>
+    </section>
+
+    <!-- 7. VISTA ALGORITMO DE SHOCK (INTERACTIVO CON ÁRBOL) -->
+    <section id="view-shock-algo" class="view-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <button class="btn btn-outline" style="width:auto; padding:8px 14px; font-size:0.8rem;" onclick="switchView('shock')" data-i18n="btn_back_to_shocks">
+          ← Volver a Tipos de Shock
+        </button>
+        <button class="btn btn-outline" id="btn-shock-restart" style="width:auto; padding:8px 14px; font-size:0.8rem; color:var(--accent);" data-i18n="btn_restart_algo">
+          🔄 Reiniciar
+        </button>
+      </div>
+
+      <div class="card" style="border-color:var(--accent);">
+        <h2 id="shock-algo-title" style="font-size:1.15rem; font-weight:800; color:var(--accent); margin-bottom:8px;"></h2>
+        <div id="shock-step-map" class="badge badge-outline" style="margin-bottom:12px; font-size:0.75rem;"></div>
+
+        <h3 id="shock-step-title" style="font-size:1.05rem; font-weight:800; margin-bottom:8px; color:var(--text-main);"></h3>
+        <p id="shock-step-desc" style="font-size:0.85rem; line-height:1.5; color:var(--text-main); margin-bottom:14px;"></p>
+
+        <div id="shock-step-drugs" style="margin-bottom:14px; display:none;"></div>
+
+        <div class="decision-card" id="shock-decision-card">
+          <div class="decision-question" id="shock-decision-text"></div>
+          <div class="decision-actions">
+            <button class="btn btn-primary" id="btn-shock-yes" style="flex:1;" data-i18n="btn_yes">SÍ</button>
+            <button class="btn btn-outline" id="btn-shock-no" style="flex:1;" data-i18n="btn_no">NO</button>
+          </div>
+        </div>
+
+        <div class="warning-callout" id="shock-terminal-card" style="display:none; background:var(--alert-success-bg); border-left-color:var(--alert-success); color:var(--alert-success-text);">
+          <strong style="color:var(--alert-success);" data-i18n="shock_terminal_header">🎯 ACCIÓN Y SEGUIMIENTO:</strong>
+          <span id="shock-terminal-text"></span>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button class="btn btn-outline" id="btn-shock-back" disabled style="padding:8px; font-size:0.8rem;" data-i18n="btn_back_step">
+            ← Paso Anterior
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. VISTA EVIDENCIA CIENTÍFICA (ACTUALIZADA 2021–2026) -->
+    <section id="view-education" class="view-section">
+      <div class="card">
+        <h2 style="font-size:1.2rem; font-weight:800; color:var(--accent); margin-bottom:4px; text-align:center;" data-i18n="card_edu_title">
+          🎓 Evidencia Científica y Ensayos Pivotales (2021–2026)
+        </h2>
+        <p style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-bottom:16px;" data-i18n="edu_subtitle">
+          Literatura de alto impacto publicada en NEJM, JAMA, Lancet, Intensive Care Medicine y Critical Care Medicine
+        </p>
+
+        <!-- Contenedor dinámico de ensayos clínicos traducidos (ES / PT / EN) -->
+        <div id="education-trials-list"></div>
+      </div>
+    </section>
+
+    <!-- 9. VISTA AJUSTES Y ACERCA DE -->
+    <section id="view-settings" class="view-section">
+      <!-- Tarjeta Upgrade PRO (solo FREE) o Estado PRO activo -->
+      <div id="settings-pro-panel">
+        <div class="pro-upgrade-card" id="settings-upgrade-card">
+          <div class="pro-title" data-i18n="settings_upgrade_title">👑 VasoActivos UCI — PRO</div>
+          <div class="pro-subtitle" data-i18n="settings_upgrade_sub">Pago único de por vida o suscripción mensual. Tú eliges.</div>
+          <ul class="pro-features">
+            <li data-i18n="pro_feat_noads">✨ Sin publicidad en toda la aplicación</li>
+            <li data-i18n="pro_feat_hemo">🫀 Profiler Hemodinámico y Perfusión Tisular COMPLETO</li>
+            <li data-i18n="pro_feat_shock">🔴 6 Árboles de Decisión de Shock interactivos</li>
+            <li data-i18n="pro_feat_updates">🎯 Recomendaciones farmacológicas basadas en guías 2024–2026</li>
+            <li data-i18n="pro_feat_offline">📱 Funciona 100% OFFLINE tras la activación</li>
+          </ul>
+          <button class="pro-cta-btn" onclick="openMonoModal('pro')" data-i18n="settings_upgrade_btn">💎 Ver planes y Upgrade a PRO</button>
+        </div>
+
+        <!-- Tarjeta de PRO Activo (inicialmente oculta) -->
+        <div class="pro-active-card" id="settings-pro-active" style="display:none; margin-bottom:14px;">
+          <h4 data-i18n="settings_active_title">✅ PRO Activo — Gracias por tu apoyo</h4>
+          <p id="settings-pro-active-info" data-i18n="settings_active_desc">Licencia de por vida activada en este dispositivo.</p>
+          <button class="btn btn-outline" onclick="resetLicense()" style="padding:8px 14px; font-size:0.78rem; color:var(--alert-critical); border-color:var(--alert-critical);" data-i18n="settings_active_reset_btn">
+            🔄 Desactivar / Usar otra licencia
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="font-size:1.15rem; font-weight:800; color:var(--accent); margin-bottom:14px; text-align:center;" data-i18n="settings_header">
+          ⚙️ Ajustes y Entorno Clínico
+        </h2>
+
+        <!-- Selector de Tema Diurno / Nocturno -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="settings_theme_label">Modo de Pantalla:</label>
+          <select id="settings-theme-select" class="form-select">
+            <option value="dark" data-i18n="theme_dark">🌙 Modo Nocturno (Dark UCI)</option>
+            <option value="light" data-i18n="theme_light">☀️ Modo Diurno (Light)</option>
+          </select>
+        </div>
+
+        <!-- Selector de Idioma -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="settings_lang_label">Idioma de la Aplicación:</label>
+          <select id="settings-lang-select" class="form-select">
+            <option value="es">Español (Castellano)</option>
+            <option value="en">English (US)</option>
+            <option value="pt">Português (Brasil)</option>
+          </select>
+        </div>
+
+        <!-- Entorno Asistencial -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="settings_env_label">Entorno Asistencial:</label>
+          <select class="form-select">
+            <option selected>UCI Médica (MICU)</option>
+            <option>UCI Quirúrgica (SICU)</option>
+            <option>UCI Cardíaca / Coronaria (CICU)</option>
+            <option>UCI Pediátrica (PICU)</option>
+            <option>Urgencias / Reanimación</option>
+            <option>Quirófano</option>
+          </select>
+        </div>
+
+        <!-- Peso por Defecto -->
+        <div class="form-group">
+          <label class="form-label" data-i18n="settings_weight_label">Peso por Defecto (kg):</label>
+          <input type="number" class="form-control" value="70">
+        </div>
+      </div>
+
+      <!-- Ficha Acerca de -->
+      <div class="card" style="text-align:center;">
+        <div style="font-size:3rem; margin-bottom:8px;">⚕️</div>
+        <h3 style="font-size:1.2rem; font-weight:800; color:var(--accent);">VasoActivos UCI</h3>
+        <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:14px;">Versión 2.0.0 Web / PWA</p>
+        
+        <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:2px;" data-i18n="about_developed_by">Desarrollado por:</p>
+        <p style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-bottom:2px;" data-i18n="about_author_name">Dr. Luis Enrique Borroto Garcia</p>
+        <p style="font-size:0.85rem; color:var(--accent); margin-bottom:14px;" data-i18n="about_author_title">MD, MsC — Especialista en Medicina Intensiva y Profesor</p>
+
+        <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.5;" data-i18n="about_references_summary">
+          Basado en Surviving Sepsis Campaign 2026/2021, ACC/AHA Cardiogenic Shock Guidelines 2025, ESICM Consensus 2024, DanGer Shock (NEJM 2024), CLOVERS (NEJM 2023), CLASSIC (NEJM 2022) y DOREMI (NEJM 2021).
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barra de Navegación Inferior (Mobile Friendly) -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-view="dashboard">
+      <span class="nav-icon">🏠</span>
+      <span data-i18n="nav_home">Inicio</span>
+    </button>
+    <button class="nav-item" data-view="calculator">
+      <span class="nav-icon">🧮</span>
+      <span data-i18n="nav_calc">Calcular</span>
+    </button>
+    <button class="nav-item" data-view="hemo">
+      <span class="nav-icon">🫀</span>
+      <span data-i18n="nav_hemo">Perfil</span>
+    </button>
+    <button class="nav-item" data-view="shock">
+      <span class="nav-icon">🔴</span>
+      <span data-i18n="nav_shock">Shock</span>
+    </button>
+    <button class="nav-item" data-view="drugs">
+      <span class="nav-icon">💊</span>
+      <span data-i18n="nav_drugs">Fármacos</span>
+    </button>
+  </nav>
+
+  <!-- Modal Ficha de Fármaco -->
+  <div class="modal-overlay" id="drug-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="drug-modal-title" data-i18n="drug_modal_title">Ficha Farmacológica</span>
+        <button class="icon-btn" onclick="closeDrugModal()">✕</button>
+      </div>
+      <div id="drug-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL DE MONETIZACIÓN: Donaciones + Upgrade PRO
+       ======================================================================== -->
+  <div class="modal-overlay" id="mono-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="mono-modal-title" style="color:var(--accent); font-weight:800;" data-i18n="mono_modal_title">
+          💛 Apoya VasoActivos UCI
+        </span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <!-- Selector Rápido de Idioma en el Modal -->
+          <button class="lang-badge-btn" id="btn-mono-lang" onclick="cycleLanguage()" title="Cambiar Idioma">ES</button>
+          <button class="icon-btn" onclick="closeMonoModal()">✕</button>
+        </div>
+      </div>
+
+      <div style="padding: 6px 16px 20px;">
+
+        <!-- TABS: Donaciones | PRO -->
+        <div class="mono-tabs">
+          <button class="mono-tab-btn active" id="mono-tab-donate-btn" data-mtab="donate" onclick="switchMonoTab('donate')" data-i18n="mono_tab_donate">💛 Donaciones</button>
+          <button class="mono-tab-btn" id="mono-tab-pro-btn" data-mtab="pro" onclick="switchMonoTab('pro')" data-i18n="mono_tab_pro">👑 Upgrade PRO</button>
+        </div>
+
+        <!-- ============ TAB DONACIONES ============ -->
+        <div class="mono-tab-pane active" id="mtab-donate">
+          <div style="text-align:center; margin-bottom:12px;">
+            <h3 style="font-size:1rem; font-weight:800; color:var(--text-main); margin-bottom:4px;" data-i18n="donate_header_title">
+              🩺 Tu apoyo mantiene esta herramienta viva
+            </h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary); line-height:1.5;" data-i18n="donate_header_desc">
+              Desarrollado por un médico especialista. Cualquier aportación, por pequeña que sea,
+              ayuda a mantener actualizadas las guías y el soporte técnico.
+            </p>
+          </div>
+
+          <div class="donation-grid" style="grid-template-columns: 1fr 1fr;">
+            <!-- TRANSFERENCIA BANCARIA (BANCO BAI) -->
+            <button class="donation-btn transfer" id="btn-donate-transfer" onclick="showTransferDetails('transfer')" data-i18n="donate_btn_transfer">
+              🏦 Transferencia Bancaria
+            </button>
+            <!-- PAGO POR REFERENCIA (MULTICAIXA EXPRESS) -->
+            <button class="donation-btn reference" id="btn-donate-reference" onclick="showTransferDetails('reference')" data-i18n="donate_btn_reference">
+              💳 Pago por Referencia
+            </button>
+          </div>
+
+          <!-- Detalles de Transferencia y Pago por Referencia (Angola + Internacional) -->
+          <div class="transfer-details" id="transfer-details" style="display:block;"></div>
+
+          <div style="margin-top:16px; padding:12px; border-radius:10px; background:var(--bg-surface-elevated); border-left:4px solid #D4AF37;">
+            <h4 style="font-size:0.85rem; font-weight:800; color:#D4AF37; margin-bottom:4px;" data-i18n="donate_prefer_pro_title">
+              ✨ ¿Prefieres PRO en vez de una donación?
+            </h4>
+            <p style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:8px;" data-i18n="donate_prefer_pro_desc">
+              Por un poco más, desbloqueas el Profiler Hemodinámico, los 6 árboles de Shock y eliminas la publicidad.
+            </p>
+            <button class="mono-continue-btn gold" onclick="switchMonoTab('pro')" data-i18n="donate_btn_see_pro">
+              👑 Ver plan PRO
+            </button>
+          </div>
+        </div>
+
+        <!-- ============ TAB PRO ============ -->
+        <div class="mono-tab-pane" id="mtab-pro">
+          <div style="text-align:center; margin-bottom:14px;">
+            <h3 style="font-size:1.05rem; font-weight:900; color:#D4AF37; margin-bottom:4px;" data-i18n="pro_header_title">
+              👑 VasoActivos UCI — PRO
+            </h3>
+            <p style="font-size:0.78rem; color:var(--text-secondary);" data-i18n="pro_header_desc">
+              Elige la opción que mejor se adapte a ti. Compra segura con Stripe o Transferencia BAI.
+            </p>
+          </div>
+
+          <!-- Plan 1: PRO de Por Vida -->
+          <div class="mono-price-card selected" data-plan="lifetime" onclick="selectPlan('lifetime')">
+            <div class="mono-price-row">
+              <div>
+                <div class="mono-price-label" data-i18n="pro_plan_lifetime_title">⭐ PRO — PAGO ÚNICO DE POR VIDA</div>
+                <div class="mono-price-period" data-i18n="pro_plan_lifetime_sub">Recomendado: 1 pago, para siempre</div>
+              </div>
+              <div class="mono-price-amount">45.000 Kz</div>
+            </div>
+            <ul class="mono-price-features">
+              <li data-i18n="pro_item_hemo">✅ Profiler Hemodinámico completo + Fenotipado</li>
+              <li data-i18n="pro_item_shock">✅ 6 Árboles de Decisión de Shock interactivos</li>
+              <li data-i18n="pro_item_noads">✅ 0 publicidad en toda la app</li>
+              <li data-i18n="pro_item_updates">✅ Actualizaciones futuras incluidas (nuevas guías, nuevos fármacos)</li>
+              <li data-i18n="pro_item_offline">✅ Funciona 100% OFFLINE tras activación</li>
+              <li data-i18n="pro_item_support">✅ Soporte prioritario por email y WhatsApp</li>
+            </ul>
+          </div>
+
+          <!-- Plan 2: Suscripción Mensual -->
+          <div class="mono-price-card" data-plan="monthly" onclick="selectPlan('monthly')">
+            <div class="mono-price-row">
+              <div>
+                <div class="mono-price-label" data-i18n="pro_plan_monthly_title">📅 PRO — Suscripción Mensual</div>
+                <div class="mono-price-period" data-i18n="pro_plan_monthly_sub">Prueba sin compromiso. Cancela cuando quieras.</div>
+              </div>
+              <div class="mono-price-amount">4.000 Kz<span style="font-size:0.72rem; color:var(--text-muted);" data-i18n="pro_plan_monthly_unit">/mes</span></div>
+            </div>
+            <ul class="mono-price-features">
+              <li data-i18n="pro_item_same">✅ Mismos beneficios que el plan de por vida</li>
+              <li data-i18n="pro_item_rotation">✅ Ideal si solo lo necesitas 1-3 meses por rotación UCI</li>
+              <li data-i18n="pro_item_billed">✅ Se factura cada 30 días</li>
+            </ul>
+          </div>
+
+          <!-- Plan 3: PRO Anual -->
+          <div class="mono-price-card" data-plan="yearly" onclick="selectPlan('yearly')">
+            <div class="mono-price-row">
+              <div>
+                <div class="mono-price-label" data-i18n="pro_plan_yearly_title">🗓️ PRO — Plan Anual (Ahorra 37%)</div>
+                <div class="mono-price-period" data-i18n="pro_plan_yearly_sub">Equivale a 2.500 Kz/mes — Ahorra 37% frente al plan mensual</div>
+              </div>
+              <div class="mono-price-amount">30.000 Kz<span style="font-size:0.72rem; color:var(--text-muted);" data-i18n="pro_plan_yearly_unit">/año</span></div>
+            </div>
+            <ul class="mono-price-features">
+              <li data-i18n="pro_item_same_annual">✅ Mismos beneficios que plan de por vida</li>
+              <li data-i18n="pro_item_renew">🔥 Ahorra 18.000 Kz al año frente al pago mensual</li>
+            </ul>
+          </div>
+
+          <!-- Botón Comprar (Stripe Payment Link) -->
+          <button class="mono-continue-btn gold" id="btn-buy-pro" onclick="buyPro()" data-i18n="pro_btn_stripe">
+            💳 Continuar con pago seguro (Stripe)
+          </button>
+
+          <!-- Botón Directo Angola: Transferencia BAI / Multicaixa Express -->
+          <button class="mono-continue-btn" id="btn-buy-bai" onclick="goToBaiTransfer()" style="background:#0a4a82; color:#fff; margin-top:8px; border:none; font-weight:700;" data-i18n="pro_btn_bai">
+            🏦 Pagar por Transferencia BAI / Multicaixa Express (Angola)
+          </button>
+
+          <!-- Tarjeta Explicativa de Recepción de Código de Activación -->
+          <div class="pro-activation-flow-card" style="margin-top:16px; padding:14px; border-radius:12px; background:rgba(13, 74, 107, 0.15); border:1.5px solid var(--accent);">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <span style="font-size:1.3rem;">📲</span>
+              <h4 id="pro-flow-title" style="font-size:0.88rem; font-weight:800; color:var(--accent); margin:0;" data-i18n="pro_flow_title">
+                ¿Cómo y por qué vía recibes tu código de activación tras pagar?
+              </h4>
+            </div>
+            <div id="pro-flow-steps" style="font-size:0.77rem; line-height:1.6; color:var(--text-main);" data-i18n-html="pro_flow_steps">
+              <!-- Renderizado dinámicamente según idioma -->
+            </div>
+          </div>
+
+          <!-- Sección Activar Licencia -->
+          <div class="mono-activate-section">
+            <div class="mono-activate-label" id="activate-label" data-i18n="pro_activate_label">
+              🎫 Pega aquí el código PRO (PRO-XXXX-XXXX-XXXX) que recibiste por WhatsApp o Email:
+            </div>
+            <div class="mono-activate-row">
+              <input type="text" class="mono-activate-input" id="license-input"
+                     placeholder="Ej: PRO-ABCD-EFGH-IJKL" data-i18n-ph="pro_activate_ph">
+              <button class="mono-activate-btn" id="btn-activate-license" onclick="activateLicense()" data-i18n="pro_activate_btn">Activar Licencia</button>
+            </div>
+            <div id="mono-activate-note" data-i18n-html="pro_activate_note" style="font-size:0.72rem; color:var(--text-muted); margin-top:8px; line-height:1.6;">
+              <!-- Localizado dinámicamente -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Aviso Legal (Obligatorio) -->
+  <div class="modal-overlay" id="disclaimer-modal">
+    <div class="modal-content" style="max-height:92vh;">
+      <div class="modal-header">
+        <span class="modal-title" style="color:var(--alert-warning);" data-i18n="disclaimer_title">⚠️ AVISO LEGAL — USO MÉDICO</span>
+      </div>
+      <div style="font-size:0.85rem; color:var(--text-main); line-height:1.6; margin-bottom:20px;">
+        <p style="margin-bottom:12px;" data-i18n="disclaimer_p1">
+          Esta aplicación está diseñada EXCLUSIVAMENTE para profesionales de la salud con formación en Medicina Intensiva y áreas de pacientes críticos.
+        </p>
+        <p style="margin-bottom:12px;" data-i18n="disclaimer_p2">
+          Las dosis, preparaciones y algoritmos son herramientas de apoyo basadas en guías clínicas vigentes (SSC 2026, ACC/AHA 2025, ESICM 2024) y NO sustituyen bajo ninguna circunstancia el juicio clínico del médico responsable.
+        </p>
+        <p style="margin-bottom:12px;" data-i18n="disclaimer_p3">
+          El autor, Dr. Luis Enrique Borroto Garcia, MD, MsC, declina toda responsabilidad por decisiones terapéuticas individuales adoptadas a partir del uso de este software.
+        </p>
+        <p data-i18n="disclaimer_p4">
+          Al pulsar el botón inferior, usted declara ser profesional sanitario cualificado y acepta estas condiciones.
+        </p>
+      </div>
+      <button class="btn btn-primary" id="btn-accept-disclaimer" data-i18n="btn_accept_disclaimer">
+        SOY PROFESIONAL SANITARIO — ACEPTO Y CONTINÚO
+      </button>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

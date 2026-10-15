@@ -1,6 +1,37 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
+    { "source": "/vasoactivos", "destination": "/vasoactivos/index.html" },
+    { "source": "/vasoactivos/", "destination": "/vasoactivos/index.html" },
+    { "source": "/vasoactivos/(.*)", "destination": "/vasoactivos/$1" },
+    { "source": "/.netlify/functions/activate", "destination": "/api/activate" },
+    { "source": "/vasoactivos/.netlify/functions/activate", "destination": "/api/activate" },
+    { "source": "/api/activate", "destination": "/api/activate" },
     { "source": "/", "destination": "/intensitech-landing" },
     { "source": "/(.*)", "destination": "/intensitech-landing/$1" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
   ]
 }
