@@ -7,11 +7,18 @@
     { "source": "/vasoactivos/(.*)", "destination": "/vasoactivos/$1" },
     { "source": "/.netlify/functions/activate", "destination": "/api/activate" },
     { "source": "/vasoactivos/.netlify/functions/activate", "destination": "/api/activate" },
-    { "source": "/api/activate", "destination": "/api/activate" },
-    { "source": "/", "destination": "/intensitech-landing" },
-    { "source": "/(.*)", "destination": "/intensitech-landing/$1" }
+    { "source": "/api/activate", "destination": "/api/activate" }
   ],
   "headers": [
+    {
+      "source": "/vasoactivos/(.*)",
+      "headers": [
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [

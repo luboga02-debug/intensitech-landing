@@ -1,11 +1,11 @@
-const CACHE_NAME = 'vasoactivos-uci-v9';
+const CACHE_NAME = 'vasoactivos-uci-v10';
 const ASSETS_TO_CACHE = [
-  './',
-  './index.html',
-  './styles.css',
-  './app.js',
-  './manifest.json',
-  './icon.svg'
+  '/vasoactivos/',
+  '/vasoactivos/index.html',
+  '/vasoactivos/styles.css',
+  '/vasoactivos/app.js',
+  '/vasoactivos/manifest.json',
+  '/vasoactivos/icon.svg'
 ];
 
 self.addEventListener('install', event => {
@@ -46,7 +46,7 @@ self.addEventListener('fetch', event => {
       return fetch(event.request).catch(() => {
         // Retornar la página principal si está offline
         if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
+          return caches.match('/vasoactivos/') || caches.match('/vasoactivos/index.html');
         }
       });
     })

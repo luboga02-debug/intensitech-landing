@@ -7,7 +7,9 @@
 // Registro del Service Worker para PWA Offline
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
+    const swUrl = location.pathname.includes('/vasoactivos') ? '/vasoactivos/sw.js' : './sw.js';
+    const swScope = location.pathname.includes('/vasoactivos') ? '/vasoactivos/' : './';
+    navigator.serviceWorker.register(swUrl, { scope: swScope })
       .then(reg => console.log('SW registrado offline:', reg.scope))
       .catch(err => console.log('SW error:', err));
   });

@@ -2,14 +2,15 @@
   "name": "VasoActivos UCI",
   "short_name": "VasoActivos",
   "description": "Calculadora de Drogas Vasoactivas y Soporte Clínico en Medicina Intensiva - Dr. Luis Enrique Borroto Garcia, MD, MsC",
-  "start_url": "./index.html",
+  "start_url": "/vasoactivos/",
+  "scope": "/vasoactivos/",
   "display": "standalone",
   "background_color": "#0A1628",
   "theme_color": "#0D4A6B",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "/vasoactivos/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
